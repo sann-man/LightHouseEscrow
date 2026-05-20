@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>Lighthouse Escrow — We'll Guide You Home</title>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*,*::before,*::after{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+:root{
+  --primary:#52676e;
+  --primary-dark:#43545a;
+  --primary-light:#edf2f3;
+
+  --accent:#f2c94c;
+  --accent-light:#fff7dd;
+
+  --white:#ffffff;
+  --off-white:#fafafa;
+
+  --text:#26353b;
+  --text-light:#6f7d82;
+
+  --border:#e7ecee;
+
+  --green:#4a9b6e;
+
+  --radius:14px;
+
+  --shadow:0 4px 20px rgba(0,0,0,0.06);
+  --shadow-lg:0 12px 40px rgba(0,0,0,0.08);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  background:var(--white);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+/* NAV */
+
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.2);
+  transition:box-shadow .3s;
+}
+
+nav.scrolled{
+  box-shadow:var(--shadow);
+  background:rgba(255,255,255,0.98);
+}
+
+.nav-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:16px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  text-decoration:none;
+  color:var(--primary);
+}
+
+.logo-icon{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  background:var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.logo-icon svg{
+  width:20px;
+  height:20px;
+}
+
+.logo-text{
+  font-family:'DM Serif Display',serif;
+  font-size:1.25rem;
+}
+
+.logo-text span{
+  display:block;
+  font-size:.6rem;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:3px;
+  color:var(--accent);
+  font-weight:700;
+  margin-top:-2px;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+
+.nav-links a{
+  text-decoration:none;
+  color:var(--text-light);
+  font-size:.88rem;
+  font-weight:600;
+  transition:.2s;
+}
+
+nav.scrolled .nav-links a{
+  color:var(--text-light);
+}
+
+.nav-links a:hover{
+  color:var(--accent);
+}
+
+.nav-phone{
+  color:var(--text-light);
+  font-weight:700!important;
+}
+
+nav.scrolled .nav-phone{
+  color:var(--primary)!important;
+}
+
+.nav-cta{
+  background:var(--accent);
+  color:var(--primary)!important;
+  padding:11px 24px;
+  border-radius:10px;
+}
+
+.nav-cta:hover{
+  background:white;
+}
+
+/* HERO */
+
+.hero-wrapper{
+  position:relative;
+  min-height:100vh;
+  overflow:hidden;
+}
+
+.hero-background{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:0;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(28,39,42,.82) 0%,
+      rgba(28,39,42,.70) 35%,
+      rgba(28,39,42,.35) 100%
+    );
+  z-index:1;
+}
+
+.hero{
+  position:relative;
+  z-index:2;
+  min-height:100vh;
+  max-width:1200px;
+  margin:0 auto;
+  padding:140px 32px 80px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:60px;
+}
+
+.hero-content h1{
+  font-family:'DM Serif Display',serif;
+  font-size:4rem;
+  line-height:1.05;
+  color:white;
+  margin-bottom:22px;
+}
+
+.hero-content h1 em{
+  color:var(--accent);
+  font-style:italic;
+}
+
+.subtitle{
+  font-size:1.1rem;
+  color:rgba(255,255,255,.82);
+  max-width:560px;
+  margin-bottom:34px;
+}
+
+.hero-actions{
+  display:flex;
+  gap:16px;
+  margin-bottom:42px;
+  flex-wrap:wrap;
+}
+
+.btn-primary,
+.btn-secondary{
+  text-decoration:none;
+  border-radius:10px;
+  padding:15px 30px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:.25s;
+  font-family:inherit;
+  font-size:1rem;
+  cursor:pointer;
+  border:none;
+}
+
+.btn-primary{
+  background:var(--accent);
+  color:var(--primary);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+  background:white;
+}
+
+.btn-secondary{
+  border:1.5px solid rgba(255,255,255,.25);
+  color:white;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(10px);
+}
+
+.btn-secondary:hover{
+  background:white;
+  color:var(--primary);
+}
+
+.trust-row{
+  display:flex;
+  gap:38px;
+  flex-wrap:wrap;
+}
+
+.trust-item{
+  text-align:center;
+}
+
+.trust-num{
+  font-family:'DM Serif Display',serif;
+  font-size:2rem;
+  color:white;
+}
+
+.trust-label{
+  font-size:.75rem;
+  color:rgba(255,255,255,.72);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:700;
+}
+
+/* HERO CARD */
+
+.hero-card{
+  background:rgba(255,255,255,.96);
+  border-radius:22px;
+  padding:34px;
+  box-shadow:var(--shadow-lg);
+  position:relative;
+  overflow:hidden;
+  backdrop-filter:blur(20px);
+}
+
+.hero-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:4px;
+  background:linear-gradient(
+    90deg,
+    var(--accent),
+    var(--primary)
+  );
+}
+
+.hero-card h3{
+  font-family:'DM Serif Display',serif;
+  font-size:1.4rem;
+  color:var(--primary);
+  margin-bottom:8px;
+}
+
+.hero-card>p{
+  color:var(--text-light);
+  margin-bottom:24px;
+  font-size:.9rem;
+}
+
+.timeline{
+  display:flex;
+  flex-direction:column;
+}
+
+.timeline-item{
+  display:flex;
+  gap:16px;
+  padding:16px 0;
+}
+
+.timeline-item:not(:last-child){
+  border-bottom:1px solid var(--border);
+}
+
+.tl-dot{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  color:white;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  flex-shrink:0;
+}
+
+.step1{
+  background:var(--accent);
+  color:var(--primary);
+}
+
+.step2{
+  background:#70867e;
+}
+
+.step3{
+  background:var(--primary);
+}
+
+.tl-info h4{
+  color:var(--primary);
+  margin-bottom:4px;
+}
+
+.tl-info p{
+  color:var(--text-light);
+  font-size:.85rem;
+}
+
+/* SHARED */
+
+section{
+  padding:90px 32px;
+}
+
+.section-inner{
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.section-label{
+  font-size:.72rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  font-weight:700;
+  color:var(--accent);
+  margin-bottom:10px;
+}
+
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:2.5rem;
+  color:var(--primary);
+  line-height:1.2;
+  margin-bottom:16px;
+}
+
+.section-subtitle{
+  max-width:650px;
+  color:var(--text-light);
+  font-size:1.05rem;
+}
+
+/* HOW IT WORKS */
+
+.how-it-works{
+  background:white;
+}
+
+.how-header{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:40px;
+  align-items:end;
+}
+
+.how-header img{
+  width:320px;
+  height:220px;
+  border-radius:18px;
+  object-fit:cover;
+  box-shadow:var(--shadow);
+}
+
+.steps-grid{
+  margin-top:48px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:28px;
+}
+
+.step-card{
+  background:white;
+  border-radius:18px;
+  border:1px solid var(--border);
+  padding:24px;
+  box-shadow:var(--shadow);
+  transition:.3s;
+}
+
+.step-card:hover{
+  transform:translateY(-5px);
+}
+
+.step-image{
+  width:100%;
+  height:190px;
+  object-fit:cover;
+  border-radius:14px;
+  margin-bottom:18px;
+}
+
+.step-card h3{
+  font-family:'DM Serif Display',serif;
+  color:var(--primary);
+  margin-bottom:10px;
+}
+
+.step-card p{
+  color:var(--text-light);
+  font-size:.9rem;
+}
+
+.step-detail{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid var(--border);
+  font-weight:700;
+  color:var(--primary);
+  font-size:.8rem;
+}
+
+/* CALCULATOR */
+
+.calc-section{
+  background:var(--off-white);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+
+.calc-container{
+  display:grid;
+  grid-template-columns:400px 1fr;
+  gap:0;
+  margin-top:40px;
+  background:white;
+  border-radius:18px;
+  border:1px solid var(--border);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+
+.calc-inputs{
+  padding:40px;
+  background:white;
+}
+
+.calc-inputs h3{
+  font-family:'DM Serif Display',serif;
+  font-size:1.3rem;
+  color:var(--primary);
+  margin-bottom:6px;
+}
+
+.calc-inputs>p{
+  font-size:.82rem;
+  color:var(--text-light);
+  margin-bottom:28px;
+}
+
+.input-group{
+  margin-bottom:20px;
+}
+
+.input-group label{
+  display:block;
+  font-size:.78rem;
+  font-weight:600;
+  color:var(--text-light);
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:6px;
+}
+
+.input-group input{
+  width:100%;
+  padding:12px 16px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  font-size:1rem;
+  font-family:inherit;
+  transition:border-color .2s;
+  background:white;
+}
+
+.input-group input:focus{
+  outline:none;
+  border-color:var(--accent);
+}
+
+.input-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  align-items:end;
+}
+
+.role-toggle{
+  display:flex;
+  border-radius:10px;
+  overflow:hidden;
+  border:1.5px solid var(--border);
+  margin-bottom:24px;
+}
+
+.role-toggle button{
+  flex:1;
+  padding:13px 16px;
+  border:none;
+  background:white;
+  font-size:.9rem;
+  font-weight:700;
+  font-family:inherit;
+  cursor:pointer;
+  color:var(--text-light);
+  transition:all .2s;
+}
+
+.role-toggle button.active{
+  background:var(--primary);
+  color:white;
+}
+
+.role-toggle button:hover:not(.active){
+  background:var(--accent-light);
+}
+
+.calc-btn{
+  width:100%;
+  padding:14px;
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:10px;
+  font-weight:700;
+  font-size:.95rem;
+  cursor:pointer;
+  transition:all .2s;
+  font-family:inherit;
+  margin-top:8px;
+}
+
+.calc-btn:hover{
+  background:var(--accent);
+  color:var(--primary);
+}
+
+.calc-results{
+  padding:40px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:var(--off-white);
+}
+
+.calc-results h3{
+  font-family:'DM Serif Display',serif;
+  font-size:1.3rem;
+  color:var(--primary);
+  margin-bottom:24px;
+}
+
+.result-total{
+  text-align:center;
+  margin-bottom:32px;
+  padding:28px;
+  background:white;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+}
+
+.result-total .label{
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:var(--text-light);
+  font-weight:600;
+}
+
+.result-total .amount{
+  font-family:'DM Serif Display',serif;
+  font-size:3rem;
+  color:var(--primary);
+  margin:8px 0;
+}
+
+.result-total .cash{
+  font-size:.9rem;
+  color:var(--green);
+  font-weight:600;
+}
+
+.fee-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.fee-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 16px;
+  border-radius:10px;
+  font-size:.85rem;
+  transition:background .2s;
+}
+
+.fee-row:hover{
+  background:rgba(242,201,76,0.08);
+}
+
+.fee-row .fee-name{
+  color:var(--text-light);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.fee-row .fee-name .dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+
+.fee-row .fee-amount{
+  font-weight:700;
+  color:var(--primary);
+}
+
+.fee-row.highlight{
+  background:var(--accent-light);
+}
+
+.fee-row.highlight .fee-name{
+  color:var(--primary);
+  font-weight:600;
+}
+
+.fee-row.total{
+  border-top:2px solid var(--primary);
+  padding-top:14px;
+  margin-top:6px;
+}
+
+.fee-row.total .fee-name{
+  font-weight:700;
+  color:var(--primary);
+}
+
+.fee-row.total .fee-amount{
+  font-size:1.1rem;
+}
+
+.fee-note{
+  font-size:.72rem;
+  color:var(--text-light);
+  margin-top:16px;
+  padding:12px;
+  background:rgba(82,103,110,0.05);
+  border-radius:10px;
+  line-height:1.6;
+}
+
+/* TESTIMONIALS */
+
+.testimonials{
+  background:var(--primary);
+}
+
+.testimonials .section-title{
+  color:white;
+}
+
+.testimonials .section-subtitle{
+  color:rgba(255,255,255,.7);
+}
+
+.testimonial-carousel-wrapper{
+  position:relative;
+  margin-top:42px;
+}
+
+.testimonial-track{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+
+.testimonial-card{
+  background:var(--primary-dark);
+  border-radius:18px;
+  padding:28px;
+  display:none;
+}
+
+.testimonial-card.visible{
+  display:block;
+}
+
+.stars{
+  color:var(--accent);
+  margin-bottom:12px;
+}
+
+.testimonial-card blockquote{
+  color:rgba(255,255,255,.8);
+  margin-bottom:18px;
+  font-style:italic;
+}
+
+.testimonial-author{
+  display:flex;
+  gap:12px;
+  align-items:center;
+}
+
+.author-avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:var(--accent);
+  color:var(--primary);
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.author-info .name{
+  color:white;
+  font-weight:700;
+}
+
+.author-info .role{
+  color:rgba(255,255,255,.6);
+  font-size:.8rem;
+}
+
+.carousel-nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:16px;
+  margin-top:28px;
+}
+
+.carousel-btn{
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  border:1.5px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.06);
+  color:white;
+  font-size:1.2rem;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .2s;
+  flex-shrink:0;
+}
+
+.carousel-btn:hover{
+  background:var(--accent);
+  color:var(--primary);
+  border-color:var(--accent);
+}
+
+.carousel-dots{
+  display:flex;
+  gap:8px;
+  align-items:center;
+}
+
+.carousel-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:rgba(255,255,255,.25);
+  border:none;
+  cursor:pointer;
+  padding:0;
+  transition:all .2s;
+}
+
+.carousel-dot.active{
+  background:var(--accent);
+  width:24px;
+  border-radius:4px;
+}
+
+/* FAQ */
+
+.faq-grid{
+  margin-top:40px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.faq-item{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  transition:.2s;
+}
+
+.faq-item:hover{
+  border-color:var(--accent);
+}
+
+.faq-q{
+  padding:22px;
+  cursor:pointer;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:700;
+  color:var(--primary);
+}
+
+.faq-q::after{
+  content:'+';
+  font-size:1.4rem;
+  color:var(--accent);
+}
+
+.faq-item.open .faq-q::after{
+  transform:rotate(45deg);
+}
+
+.faq-a{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s ease;
+}
+
+.faq-item.open .faq-a{
+  max-height:220px;
+}
+
+.faq-a p{
+  padding:0 22px 22px;
+  color:var(--text-light);
+  font-size:.9rem;
+}
+
+/* PRIVACY */
+
+.privacy{
+  background:var(--off-white);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+
+/* CTA */
+
+.cta-band{
+  position:relative;
+  overflow:hidden;
+  text-align:center;
+  background:linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-dark)
+  );
+  padding:100px 32px;
+}
+
+.cta-band img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  opacity:.12;
+}
+
+.cta-band-content{
+  position:relative;
+  z-index:2;
+}
+
+.cta-band h2{
+  font-family:'DM Serif Display',serif;
+  font-size:2.6rem;
+  color:white;
+  margin-bottom:14px;
+}
+
+.cta-band p{
+  max-width:580px;
+  margin:0 auto 32px;
+  color:rgba(255,255,255,.75);
+}
+
+.contact-info{
+  margin-top:28px;
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
+}
+
+.contact-info a{
+  color:#fff5c9;
+  text-decoration:none;
+}
+
+/* FOOTER */
+
+footer{
+  background:var(--primary);
+  padding:50px 32px 30px;
+}
+
+.footer-inner{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:40px;
+}
+
+.footer-brand .logo-text{
+  color:white;
+}
+
+.footer-brand .logo-text span{
+  color:#fff3ba;
+}
+
+.footer-brand p{
+  margin-top:12px;
+  color:rgba(255,255,255,.6);
+  max-width:420px;
+}
+
+.footer-col h4{
+  color:#fff3ba;
+  margin-bottom:16px;
+  font-size:.75rem;
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+
+.footer-col a{
+  display:block;
+  margin-bottom:10px;
+  color:rgba(255,255,255,.6);
+  text-decoration:none;
+}
+
+.footer-col a:hover{
+  color:white;
+}
+
+.footer-bottom{
+  max-width:1200px;
+  margin:24px auto 0;
+  padding-top:24px;
+  border-top:1px solid rgba(255,255,255,.08);
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:10px;
+  color:rgba(255,255,255,.45);
+  font-size:.8rem;
+}
+
+/* ANIMATION */
+
+.fade-up{
+  opacity:0;
+  transform:translateY(24px);
+  transition:all .6s ease;
+}
+
+.fade-up.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.delay-1{
+  transition-delay:.1s;
+}
+
+.delay-2{
+  transition-delay:.2s;
+}
+
+#logo-img{
+    width: 50%; 
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .hero{
+    grid-template-columns:1fr;
+    padding:120px 24px 70px;
+  }
+
+  .hero-content h1{
+    font-size:2.9rem;
+  }
+
+  .how-header{
+    grid-template-columns:1fr;
+  }
+
+  .how-header img{
+    display:none;
+  }
+
+  .steps-grid,
+  .faq-grid,
+  .footer-inner{
+    grid-template-columns:1fr;
+  }
+
+  .testimonial-track{
+    grid-template-columns:1fr;
+  }
+
+  .calc-container{
+    grid-template-columns:1fr;
+  }
+
+  .nav-links a:not(.nav-phone):not(.nav-cta){
+    display:none;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+
+<nav id="navbar">
+
+  <div class="nav-inner">
+
+    <a href="#" class="logo">
+
+      <!-- <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+          <path d="M12 4v10M8 8l4-4 4 4"/>
+        </svg>
+      </div> -->
+
+      <!-- <div class="logo-text">
+        LIGHTHOUSE
+        <span>ESCROW</span>
+      </div> -->
+      <div class="logo-text">
+        <img id = "logo-img" src="Lighthouse Escrow Logo.webp" alt="">
+      </div>
+
+    </a>
+
+    <div class="nav-links">
+
+      <a href="#how-it-works">About Us</a>
+      <!-- <a href="#calculator">Cost Calculator</a> -->
+      <!-- <a href="#testimonials">Testimonials</a> -->
+      <a href="#faq">FAQ</a>
+      <a href="#privacy">Privacy Policy</a>
+
+      <a href="tel:9492345678" class="nav-phone">
+        &#128222; (949) 234-5678
+      </a>
+
+      <a href="#contact" class="nav-cta">
+        Get a Free Quote
+      </a>
+
+    </div>
+
+  </div>
+
+</nav>
+
+<!-- HERO WRAPPER -->
+
+<div class="hero-wrapper">
+
+  <img
+    src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1600&q=80"
+    alt="Luxury home"
+    class="hero-background"
+  >
+
+  <div class="hero-overlay"></div>
+
+  <header class="hero">
+
+    <div class="hero-content">
+
+      <h1>
+        Close your home sale with
+        <em>confidence.</em>
+      </h1>
+
+      <p class="subtitle">
+        Lighthouse Escrow handles contracts, timelines, and secure
+        fund transfers so your transaction stays smooth from offer
+        to closing.
+      </p>
+
+      <div class="hero-actions">
+
+        <a href="#contact" class="btn-primary">
+          Get a Free Quote &#8594;
+        </a>
+
+        <a href="#how-it-works" class="btn-secondary">
+          See How It Works
+        </a>
+
+      </div>
+
+      <div class="trust-row">
+
+        <div class="trust-item">
+          <div class="trust-num">2,500+</div>
+          <div class="trust-label">Closings</div>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-num">15+</div>
+          <div class="trust-label">Years</div>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-num">4.9★</div>
+          <div class="trust-label">Rating</div>
+        </div>
+
+        <div class="trust-item">
+          <div class="trust-num">$0</div>
+          <div class="trust-label">Hidden Fees</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="hero-card">
+
+      <h3>Your Escrow at a Glance</h3>
+
+      <p>
+        What happens from accepted offer to closing day.
+      </p>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="tl-dot step1">1</div>
+          <div class="tl-info">
+            <h4>Open Escrow</h4>
+            <p>We open the file, secure deposits, and begin coordinating your transaction.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-dot step2">2</div>
+          <div class="tl-info">
+            <h4>Process &amp; Protect</h4>
+            <p>We manage title, inspections, loan docs, and timelines.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-dot step3">3</div>
+          <div class="tl-info">
+            <h4>Close &amp; Transfer</h4>
+            <p>Funds are released, title records, and ownership transfers.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </header>
+
+</div>
+
+<!-- HOW IT WORKS -->
+
+<section class="how-it-works" id="how-it-works">
+
+  <div class="section-inner">
+
+    <div class="how-header">
+
+      <div>
+        <div class="section-label">Your Journey</div>
+        <h2 class="section-title">How escrow works with Lighthouse</h2>
+        <p class="section-subtitle">From accepted offer to keys in hand, we guide every step of the process.</p>
+      </div>
+
+      <img
+        src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=640&q=80"
+        alt="Home buyers"
+      >
+
+    </div>
+
+    <div class="steps-grid">
+
+      <div class="step-card fade-up">
+        <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=80" alt="Open escrow" class="step-image">
+        <h3>Open Escrow</h3>
+        <p>Once the offer is accepted, we open your escrow file and begin coordinating deposits, timelines, and documentation.</p>
+        <div class="step-detail">⏱ Typically day 1–3</div>
+      </div>
+
+      <div class="step-card fade-up delay-1">
+        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80" alt="Document signing" class="step-image">
+        <h3>Process &amp; Coordinate</h3>
+        <p>We work with lenders, agents, title companies, and inspectors to keep every moving part aligned.</p>
+        <div class="step-detail">⏱ Typically day 3–25</div>
+      </div>
+
+      <div class="step-card fade-up delay-2">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Closing home" class="step-image">
+        <h3>Close &amp; Disburse</h3>
+        <p>Once conditions are met, we record the deed, transfer funds, and officially close the transaction.</p>
+        <div class="step-detail">⏱ Typically day 25–30</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- TESTIMONIALS -->
+
+<section class="testimonials" id="testimonials">
+
+  <div class="section-inner">
+
+    <div class="section-label">What Clients Say</div>
+    <h2 class="section-title">Trusted by homeowners across California</h2>
+    <p class="section-subtitle">Real stories from real closings.</p>
+
+    <div class="testimonial-carousel-wrapper">
+
+      <div class="testimonial-track" id="testimonialTrack">
+
+        <div class="testimonial-card visible">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Lighthouse made our first home purchase so much less stressful. Every step felt organized and transparent."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">MR</div>
+            <div class="author-info">
+              <div class="name">Maria R.</div>
+              <div class="role">First-time buyer, Irvine</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card visible">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Their communication was incredible. We always knew exactly where we were in the process."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">DK</div>
+            <div class="author-info">
+              <div class="name">David K.</div>
+              <div class="role">Repeat seller, Newport Beach</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card visible">
+          <div class="stars">★★★★★</div>
+          <blockquote>"As an agent, I trust Lighthouse with my clients because they consistently deliver smooth closings."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">SL</div>
+            <div class="author-info">
+              <div class="name">Sarah L.</div>
+              <div class="role">Realtor, Orange County</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"We closed two weeks early thanks to their Pre-Escrow service. My buyer's agent was genuinely impressed."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">JP</div>
+            <div class="author-info">
+              <div class="name">James P.</div>
+              <div class="role">Seller, Tustin</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"The cost calculator gave me a clear picture before I even called. No surprises at closing, exactly as promised."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">AN</div>
+            <div class="author-info">
+              <div class="name">Angela N.</div>
+              <div class="role">First-time buyer, Lake Forest</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Lighthouse is the only escrow company where I never have to follow up, they keep me in the loop automatically."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">RT</div>
+            <div class="author-info">
+              <div class="name">Rachel T.</div>
+              <div class="role">Real estate agent, Laguna Niguel</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Our escrow coordinator explained every document. We never felt lost or pressured. Highly recommend for first-timers."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">MC</div>
+            <div class="author-info">
+              <div class="name">Michael C.</div>
+              <div class="role">Buyer, Costa Mesa</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Sold my condo in a complicated HOA situation. Lighthouse handled everything and kept it on schedule."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">LS</div>
+            <div class="author-info">
+              <div class="name">Linda S.</div>
+              <div class="role">Seller, Irvine</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="stars">★★★★★</div>
+          <blockquote>"Fast, professional, and they actually answer the phone. That alone puts them ahead of every escrow company I've used."</blockquote>
+          <div class="testimonial-author">
+            <div class="author-avatar">BW</div>
+            <div class="author-info">
+              <div class="name">Brian W.</div>
+              <div class="role">Investor, Anaheim</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="carousel-nav">
+        <button class="carousel-btn" onclick="scrollTestimonials(-1)" aria-label="Previous testimonials">&#8592;</button>
+        <div class="carousel-dots" id="carouselDots"></div>
+        <button class="carousel-btn" onclick="scrollTestimonials(1)" aria-label="Next testimonials">&#8594;</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- CALCULATOR -->
+
+<section class="calc-section" id="calculator">
+
+  <div class="section-inner">
+
+    <div class="section-label">Transparency</div>
+    <h2 class="section-title">Estimate your closing costs</h2>
+    <p class="section-subtitle">No surprises. Enter your details and see a realistic breakdown of every fee, including ours.</p>
+
+    <div class="calc-container fade-up">
+
+      <div class="calc-inputs">
+
+        <h3>Your Details</h3>
+        <p>All fields are estimates, we'll provide exact figures once escrow opens.</p>
+
+        <div class="role-toggle">
+          <button id="roleSellerBtn" class="active" onclick="setRole('seller')">I'm a Seller</button>
+          <button id="roleBuyerBtn" onclick="setRole('buyer')">I'm a Buyer</button>
+        </div>
+
+        <div class="input-group">
+          <label>Purchase Price</label>
+          <input type="text" id="price" placeholder="$750,000" value="750000">
+        </div>
+
+        <div id="sellerFields">
+          <div class="input-row">
+            <div class="input-group">
+              <label>Number of HOAs</label>
+              <input type="text" id="hoas" placeholder="0" value="0">
+            </div>
+            <div class="input-group">
+              <label>Agent Commission %</label>
+              <input type="text" id="commission" placeholder="5" value="5">
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Outstanding Loan Amount</label>
+            <input type="text" id="loan" placeholder="$0" value="0">
+          </div>
+        </div>
+
+        <div id="buyerFields" style="display:none">
+          <div class="input-group">
+            <label>Loan Amount</label>
+            <input type="text" id="buyerLoan" placeholder="$0" value="0">
+          </div>
+        </div>
+
+        <button class="calc-btn" onclick="calculate()">Calculate Closing Costs</button>
+
+      </div>
+
+      <div class="calc-results" id="calcResults">
+
+        <h3 id="calcHeading">What will it cost to sell my home?</h3>
+
+        <div class="result-total">
+          <div class="label">Estimated Closing Costs</div>
+          <div class="amount" id="totalCost">$46,925</div>
+          <div class="cash" id="cashHome">Your Cash: <strong>$703,075</strong></div>
+        </div>
+
+        <div class="fee-list" id="feeList"></div>
+
+        <div class="fee-note">
+          ✦ Fees marked with * are third-party estimates. Actual amounts depend on your specific transaction. We'll provide exact figures once escrow opens. Lighthouse Escrow is licensed by the California DFPI, license #963-2598.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FAQ -->
+
+<section id="faq">
+
+  <div class="section-inner">
+
+    <div class="section-label">Questions</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <p class="section-subtitle">Answers to the most common escrow questions.</p>
+
+    <div class="faq-grid">
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">How long does escrow usually take?</div>
+        <div class="faq-a"><p>Most California escrows close within 30–45 days depending on financing, inspections, and title conditions.</p></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Is my money secure during escrow?</div>
+        <div class="faq-a"><p>Yes. Funds are held in secure trust accounts and released only when all contractual conditions are satisfied.</p></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">What does an escrow company do?</div>
+        <div class="faq-a"><p>We act as a neutral third party that coordinates documents, timelines, funds, and communication between all parties.</p></div>
+      </div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">Can buyers choose the escrow company?</div>
+        <div class="faq-a"><p>Yes. Buyers and sellers can negotiate which escrow company will handle the transaction.</p></div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- PRIVACY -->
+
+<section class="privacy" id="privacy">
+
+  <div class="section-inner">
+    <div class="section-label">Privacy Policy</div>
+    <h2 class="section-title">Your information stays protected</h2>
+    <p class="section-subtitle">Lighthouse Escrow uses secure systems, encrypted communication, and verified transaction protocols to protect your personal and financial information throughout the escrow process.</p>
+  </div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="cta-band" id="contact">
+
+  <img
+    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80"
+    alt="Beautiful home"
+  >
+
+  <div class="cta-band-content">
+
+    <h2>Ready to open escrow?</h2>
+    <p>Get a free quote in under 2 minutes and let Lighthouse guide your closing from start to finish.</p>
+    <a href="#" class="btn-primary">Get a Free Quote →</a>
+
+    <div class="contact-info">
+      <a href="tel:9492345678">📞 (949) 234-5678</a>
+      <a href="mailto:info@LighthouseEscrow.com">✉️ info@LighthouseEscrow.com</a>
+      <a href="#">📍 Irvine, California</a>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <div class="logo-text">LIGHTHOUSE<span>ESCROW</span></div>
+      <p>Lighthouse Escrow is a California licensed escrow company dedicated to smooth, transparent real estate closings.</p>
+    </div>
+
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Contact</a>
+      <a href="#">Careers</a>
+    </div>
+
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="#">FAQ</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Testimonials</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 Lighthouse Escrow. All rights reserved.</span>
+    <span>DFPI License #963-2598</span>
+  </div>
+
+</footer>
+
+<script>
+
+// NAVBAR SCROLL
+window.addEventListener('scroll',function(){
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20);
+});
+
+// FAQ
+function toggleFaq(el){
+  el.classList.toggle('open');
+}
+
+// FADE UP
+const observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:.15});
+
+document.querySelectorAll('.fade-up').forEach(function(el){
+  observer.observe(el);
+});
+
+// CALCULATOR
+var currentRole='seller';
+
+function setRole(role){
+  currentRole=role;
+  document.getElementById('roleSellerBtn').classList.toggle('active',role==='seller');
+  document.getElementById('roleBuyerBtn').classList.toggle('active',role==='buyer');
+  document.getElementById('sellerFields').style.display=role==='seller'?'block':'none';
+  document.getElementById('buyerFields').style.display=role==='buyer'?'block':'none';
+  document.getElementById('calcHeading').textContent=role==='seller'?'What will it cost to sell my home?':'What will it cost to buy my home?';
+  calculate();
+}
+
+function calculate(){
+  var price=parseFloat(document.getElementById('price').value.replace(/[^0-9.]/g,''))||0;
+  var fees=[];
+
+  if(currentRole==='seller'){
+    var commPct=parseFloat(document.getElementById('commission').value)||5;
+    var loan=parseFloat(document.getElementById('loan').value.replace(/[^0-9.]/g,''))||0;
+    var hoas=parseInt(document.getElementById('hoas').value)||0;
+
+    var escrowFee=Math.max(price*0.002,500);
+    var agentComm=price*(commPct/100);
+    var hoaDocs=hoas*450;
+    var nhd=125;
+    var termite=175;
+    var homeWarranty=550;
+    var transferTax=price*0.0011;
+    var titleIns=price*0.003;
+    var recording=75;
+    var other=250;
+
+    fees=[
+      {name:'Lighthouse Escrow Fee',amount:escrowFee,color:'#f2c94c',highlight:true},
+      {name:'Agent Commission*',amount:agentComm,color:'#5b8def'},
+      {name:'HOA Documents*',amount:hoaDocs,color:'#7c6bc4'},
+      {name:'Natural Hazard Disclosure*',amount:nhd,color:'#e07c5a'},
+      {name:'Termite Inspection*',amount:termite,color:'#4a9b6e'},
+      {name:'Home Warranty*',amount:homeWarranty,color:'#d4a853'},
+      {name:'Transfer Tax*',amount:transferTax,color:'#c0392b'},
+      {name:'Title Insurance*',amount:titleIns,color:'#52676e'},
+      {name:'Recording Service*',amount:recording,color:'#8e8e8e'},
+      {name:'Other Fees*',amount:other,color:'#aaa'}
+    ];
+
+    var total=0;
+    for(var i=0;i<fees.length;i++) total+=fees[i].amount;
+    var cash=price-loan-total;
+
+    document.getElementById('totalCost').textContent='$'+Math.round(total).toLocaleString();
+    document.getElementById('cashHome').innerHTML='Your Cash: <strong>$'+Math.round(cash).toLocaleString()+'</strong>';
+    document.getElementById('cashHome').style.display='block';
+
+  } else {
+    var buyerLoan=parseFloat(document.getElementById('buyerLoan').value.replace(/[^0-9.]/g,''))||0;
+
+    var escrowFee=Math.max(price*0.002,500);
+    var lenderTitle=buyerLoan*0.003;
+    var recording=75;
+    var other=250;
+
+    fees=[
+      {name:'Lighthouse Escrow Fee',amount:escrowFee,color:'#f2c94c',highlight:true},
+      {name:'Lender Title Policy*',amount:lenderTitle,color:'#7c6bc4'},
+      {name:'Recording Service*',amount:recording,color:'#8e8e8e'},
+      {name:'Other Fees*',amount:other,color:'#aaa'}
+    ];
+
+    var total=0;
+    for(var i=0;i<fees.length;i++) total+=fees[i].amount;
+
+    document.getElementById('totalCost').textContent='$'+Math.round(total).toLocaleString();
+    document.getElementById('cashHome').style.display='none';
+  }
+
+  var html='';
+  for(var j=0;j<fees.length;j++){
+    var f=fees[j];
+    html+='<div class="fee-row'+(f.highlight?' highlight':'')+'">';
+    html+='<span class="fee-name"><span class="dot" style="background:'+f.color+'"></span>'+f.name+'</span>';
+    html+='<span class="fee-amount">$'+Math.round(f.amount).toLocaleString()+'</span>';
+    html+='</div>';
+  }
+  html+='<div class="fee-row total">';
+  html+='<span class="fee-name">Closing Costs</span>';
+  html+='<span class="fee-amount">$'+Math.round(total).toLocaleString()+'</span>';
+  html+='</div>';
+  document.getElementById('feeList').innerHTML=html;
+}
+
+// Run on load
+calculate();
+
+// TESTIMONIAL CAROUSEL — 3 pages of 3 cards
+(function(){
+  var cards=document.querySelectorAll('#testimonialTrack .testimonial-card');
+  var dotsContainer=document.getElementById('carouselDots');
+  var perPage=3;
+  var totalPages=Math.ceil(cards.length/perPage);
+  var current=0;
+
+  function showPage(page){
+    if(page<0) page=totalPages-1;
+    if(page>=totalPages) page=0;
+    current=page;
+    var start=current*perPage;
+    for(var i=0;i<cards.length;i++){
+      cards[i].classList.toggle('visible',i>=start && i<start+perPage);
+    }
+    var dots=dotsContainer.querySelectorAll('.carousel-dot');
+    for(var j=0;j<dots.length;j++){
+      dots[j].classList.toggle('active',j===current);
+    }
+  }
+
+  // Build dots
+  for(var i=0;i<totalPages;i++){
+    var d=document.createElement('button');
+    d.className='carousel-dot'+(i===0?' active':'');
+    d.onclick=(function(idx){return function(){showPage(idx)}})(i);
+    dotsContainer.appendChild(d);
+  }
+
+  window.scrollTestimonials=function(dir){
+    showPage(current+dir);
+  };
+})();
+
+</script>
+
+</body>
+</html>
